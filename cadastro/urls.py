@@ -25,3 +25,6 @@ urlpatterns = [
     path('', include('cidade.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+admin.AdminSite.site_header = 'Administração E-soft'
+admin.AdminSite.site_title = 'E-SOFT SISTEMAS LTDA'
+admin.AdminSite.index_title = 'Sistema de Cadastros'
