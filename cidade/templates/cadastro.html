@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="container">
+        <h1>{{title}}</h1>
+        <div class="jumbotron">
+            <form action="{% url 'cadastros' %}" method="post" class="form" autocomplete="off">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <hr>
+                <input type="submit" class="btn btn-primary" value="{{botao}}">
+                <a href="{% url 'index' %}" class="btn btn-danger">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block javascript %}
+<script>
+    function getDataViaCep(cep) {
+        var url = 'https://viacep.com.br/ws/' + cep + '/json/';
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                var data = JSON.parse(xhr.responseText);
+                document.getElementById('id_endereco').value = data.logradouro;
+                document.getElementById('id_bairro').value = data.bairro;
+                document.getElementById('id_cidade').value = data.localidade;
+                document.getElementById('id_uf').value = data.uf;
+            }
+        }
+        xhr.send();
+    }
+
+    document.getElementById("id_cep").addEventListener("blur", function() {
+        var cep = this.value;
+        getDataViaCep(cep);
+    });
+</script>
+{% endblock %}

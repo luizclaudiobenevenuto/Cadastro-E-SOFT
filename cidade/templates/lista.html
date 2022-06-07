@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %} {{title}} {% endblock %}
+{% block content %}
+<div class="container">
+    <h1>{{title}}</h1>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Cep</th>
+                <th scope="col">Endereço</th>
+                <th scope="col">Número</th>
+                <th scope="col">Complemento</th>
+                <th scope="col">Bairro</th>
+                <th scope="col">Cidade</th>
+                <th scope="col">UF</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cadastro in Cadastros %}
+                <tr>
+                    <td scope="row">{{ cadastro.id }}</td>
+                    <td scope="row">{{ cadastro.cep }}</td>
+                    <td scope="row">{{ cadastro.endereco }}</td>
+                    <td scope="row">{{ cadastro.numero }}</td>
+                    <td scope="row">{{ cadastro.complemento }}</td>
+                    <td scope="row">{{ cadastro.bairro }}</td>
+                    <td scope="row">{{ cadastro.cidade }}</td>
+                    <td scope="row">{{ cadastro.uf }}</td>
+                    <td scope="row">{{ cadastro.descricao }}</td>
+                    <td scope="row"><a href="{% url 'atualizacao' id=cadastro.id %}">Editar</a></td>
+
+                </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+
+    <form action="{% url 'cadastros' %}" method="post" class="form">
+        {% csrf_token %}
+
+        <a href="{% url 'cadastros' %}" class="btn btn-primary">Cadastrar</a>
+    </form>
+</div>
+{% endblock %}
